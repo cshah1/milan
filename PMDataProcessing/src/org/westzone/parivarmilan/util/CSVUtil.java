@@ -60,10 +60,8 @@ public class CSVUtil {
 				if (id.equals(idInSource))
 				{
 					found = true;
-//					int currentColumnNumber = 
 					for(int m = 0; m < newColumnIndexes.length; m++) {
 						mergedFile[j][originalFile[j].length + m] = modifiedFile[i][newColumnIndexes[m]];
-//						mergedFile[j][newColumnIndex[m]]
 					}
 				}
 				
