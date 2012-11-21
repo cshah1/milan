@@ -30,89 +30,53 @@ public class CSVUtil {
 	
 	private static final String DATA_FOLDER = "/home/cshah/Documents/Milan2012/output/";
 	
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-
-		String roomAssignmentFile = "RoomAssignment.csv";
-		String registrationFile = "ThanksgivingMilanRegistrationList1.csv";
-		
-		
-		log.debug("Parsing files: " + roomAssignmentFile + " " + registrationFile);
-		
-		String[][] roomAssignments = null;
-		String[][] registrations = null;
-		
-		 
-		try {
-			
-			roomAssignments = CSVUtil.parseCSV(roomAssignmentFile);
-			registrations = CSVUtil.parseCSV(registrationFile);
-		} 
-		catch (IOException e) {
-			log.error(e);
-			e.printStackTrace();
-			return;
-		}
-		
-		
-		ArrayList<String> rooms = new ArrayList<String>();
-		ArrayList<String> roomTypes = new ArrayList<String>();
-		String values[][];
-		
-
-//		Holiday Inn
-		
-//		for(int i = 50; i < 175; i++) {
-//			rooms.add(roomAssignments[i][2]);
-//			roomTypes.add(roomAssignments[i][3]);
-//		}
-//		values = CSVUtil.fromRegistrations(rooms, registrations, roomTypes);
-//		CSVUtil.writeCSV(values, "HIRoom_Assignments.csv");
-		
-//		Comfort Inn
-//		rooms.clear(); roomTypes.clear();
-//		for(int i = 0; i < 50; i++) {
-//			rooms.add(roomAssignments[i][2]);
-//			roomTypes.add(roomAssignments[i][3]);
-//		}
-//		values = CSVUtil.fromRegistrations(rooms, registrations, roomTypes);
-//		CSVUtil.writeCSV(values, "CIRoom_Assignments.csv");
-
-//		ABVI
-//		rooms.clear(); roomTypes.clear();
-//		for(int i = 175; i < 200; i++) {
-//			rooms.add(roomAssignments[i][2]);
-//			roomTypes.add(roomAssignments[i][3]);
-//		}
-//		values = CSVUtil.fromRegistrations(rooms, registrations, roomTypes);
-//		CSVUtil.writeCSV(values, "ABVIRoom_Assignments.csv");
-		
-		// Motel 6
-//		rooms.clear(); roomTypes.clear();
-//		for(int i = 200; i < 235; i++) {
-//			rooms.add(roomAssignments[i][2]);
-//			roomTypes.add(roomAssignments[i][3]);
-//		}
-//		values = CSVUtil.fromRegistrations(rooms, registrations, roomTypes);
-//		CSVUtil.writeCSV(values, "M6Room_Assignments.csv");
-		
-
-//		Virtual Motel
-		rooms.clear(); roomTypes.clear();
-		for(int i = 235; i < 245; i++) {
-			rooms.add(roomAssignments[i][2]);
-			roomTypes.add(roomAssignments[i][3]);
-		}
-		values = CSVUtil.fromRegistrations(rooms, registrations, roomTypes);
-		CSVUtil.writeCSV(values, "VMRoom_Assignments.csv");
-		
-		
-		
+	public static void merge(String originalFilePath, String modifiedFilePath, String idColumn)
+	{
 	}
+	
+	
+	public static void merge(int originalFileIdColumnIndex, String[][] originalFile, int modifiedFileIdColumnIndex, String[][] modifiedFile, int[] newColumnIndexes, String mergedFileName)
+	{
+		String[][] mergedFile = new String[originalFile.length][originalFile[0].length + newColumnIndexes.length];
+
+		// We have both files in array format now
+		
+		// For each row in the modified file, find the corresponding row in the source file
+		for (int i = 0; i < modifiedFile.length; i++)
+		{
+			boolean found = false;
+			String id = modifiedFile[i][modifiedFileIdColumnIndex];
+			
+			for(int j = 0; j < originalFile.length; j++) {
+				
+				for(int k = 0; k < originalFile[j].length; k++) {
+					mergedFile[j][k] = originalFile[j][k];
+				}
+				
+				String idInSource = originalFile[j][originalFileIdColumnIndex];
+				
+				                                    
+				// We found the key in the source file, append the modified file's column to it
+				if (id == idInSource)
+				{
+					found = true;
+					for(int m = 0; m < newColumnIndexes.length; ) {
+						mergedFile[j][originalFile[j].length + ++m] = modifiedFile[i][newColumnIndexes[m]];
+					}
+				}
+				
+			}
+			
+			if(!found) {
+				// We did not find the key in the source file
+				log.debug("Id not found in the original file: " + id);
+			}
+		}
+		
+		// now generate merged csv
+		CSVUtil.writeCSV(mergedFile, mergedFileName);
+	}
+	
 	
 	public static String[][] fromRegistrations(ArrayList<String> hotelRooms, String[][] registrations, ArrayList<String> roomTypes) {
 		String values[][] = new String[hotelRooms.size()][7];
@@ -122,7 +86,7 @@ public class CSVUtil {
 			values[i][0] = room;
 			values[i][1] = roomTypes.get(i);
 			int cols = 2;
-			for(int j = 0; j <901; j++) {
+			for(int j = 0; j < 901; j++) {
 				
 				String regRoom = registrations[j][6];
 				String fName = registrations[j][3];
