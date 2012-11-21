@@ -99,23 +99,23 @@ public class ParivarMilanCsvMerger
 	{
 		ArrayList<String> nonMatchingStrings = new ArrayList<String>();
 		
-		boolean skipRef = true;
+		boolean skip = true;
 		
 		for (String[] referenceRow : referenceArray)
 		{
-			if(skipRef)
+			if(skip)
 			{
-				skipRef = false;
+				skip = false;
 				continue;
 			}
 			boolean matchFound = false;
 			
-			boolean skipNewRow = true;
+			skip = true;
 			
 			for (String[] newRow : newArray)
 			{
-				if(skipNewRow) {
-					skipNewRow = false;
+				if(skip) {
+					skip = false;
 					continue;
 				}
 				if (newRow[newArrayKeyColumnIndex].equals(referenceRow[referenceArrayKeyColumnIndex]))
