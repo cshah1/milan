@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Set;
 
-import org.computer.csvparser.util.CSVUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.westzone.parivarmilan.util.CSVUtil;
 
 public class CSVImportTest {
 	
@@ -25,7 +25,7 @@ public class CSVImportTest {
 	public void testParseCSV() {
 		String[][] results = null;
 		try {
-			results = CSVUtil.parseCSV(fileName);
+			results = CSVUtil.parseCSV(fileName, null);
 		} catch (FileNotFoundException e) {
 			fail("Missing File");
 		} catch (IOException e) {

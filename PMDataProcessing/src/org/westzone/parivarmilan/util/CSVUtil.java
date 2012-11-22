@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.Ostermiller.util.CSVParser;
 import com.Ostermiller.util.CSVPrinter;
+import com.Ostermiller.util.LabeledCSVParser;
 
 public class CSVUtil {
 	
@@ -119,7 +120,11 @@ public class CSVUtil {
 		return values;
 	}
 	
-	public static String[][] parseCSV(String fileName) throws FileNotFoundException, IOException{
+	public static String[][] parseCSV(String fileName) throws FileNotFoundException, IOException {
+		return CSVUtil.parseCSV(fileName, null);
+	}
+	
+	public static String[][] parseCSV(String fileName, String[] labels) throws FileNotFoundException, IOException{
 		String result[][] = null;
 		
 		InputStream stream = CSVUtil.class.getClassLoader().getResourceAsStream(fileName);
@@ -164,9 +169,14 @@ public class CSVUtil {
 		input = input.replaceAll("(\\?)(\")(\")", "$1$2");  // ""
 		
 		
-
-		 
-		result = CSVParser.parse(new StringReader(input));
+		if(labels != null) {
+			LabeledCSVParser lcsvp = new LabeledCSVParser(new CSVParser(new StringReader(input)));
+			result = lcsvp.getAllValues();
+		}
+		else { 
+			result = CSVParser.parse(new StringReader(input));
+		}
+		
 		
 		return result;
 	}
