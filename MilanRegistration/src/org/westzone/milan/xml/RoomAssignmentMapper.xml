@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.westzone.milan.dao.RoomAssignmentMapper" >
+  <resultMap id="BaseResultMap" type="org.westzone.milan.model.RoomAssignment" >
+    <id column="hotelRoomID" property="hotelRoomID" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="registrationID" property="registrationID" jdbcType="INTEGER" />
+    <result column="Comments" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hotelRoomID, date, registrationID, Comments
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.westzone.milan.model.RoomAssignmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from roomassignment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from roomassignment
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from roomassignment
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.westzone.milan.model.RoomAssignmentExample" >
+    delete from roomassignment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.westzone.milan.model.RoomAssignment" >
+    insert into roomassignment (hotelRoomID, date, registrationID, 
+      Comments)
+    values (#{hotelRoomID,jdbcType=INTEGER}, #{date,jdbcType=DATE}, #{registrationID,jdbcType=INTEGER}, 
+      #{comments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.westzone.milan.model.RoomAssignment" >
+    insert into roomassignment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hotelRoomID != null" >
+        hotelRoomID,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="registrationID != null" >
+        registrationID,
+      </if>
+      <if test="comments != null" >
+        Comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hotelRoomID != null" >
+        #{hotelRoomID,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="registrationID != null" >
+        #{registrationID,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.westzone.milan.model.RoomAssignmentExample" resultType="java.lang.Integer" >
+    select count(*) from roomassignment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update roomassignment
+    <set >
+      <if test="record.hotelRoomID != null" >
+        hotelRoomID = #{record.hotelRoomID,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.registrationID != null" >
+        registrationID = #{record.registrationID,jdbcType=INTEGER},
+      </if>
+      <if test="record.comments != null" >
+        Comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update roomassignment
+    set hotelRoomID = #{record.hotelRoomID,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      registrationID = #{record.registrationID,jdbcType=INTEGER},
+      Comments = #{record.comments,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.westzone.milan.model.RoomAssignment" >
+    update roomassignment
+    <set >
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="registrationID != null" >
+        registrationID = #{registrationID,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        Comments = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.westzone.milan.model.RoomAssignment" >
+    update roomassignment
+    set date = #{date,jdbcType=DATE},
+      registrationID = #{registrationID,jdbcType=INTEGER},
+      Comments = #{comments,jdbcType=VARCHAR}
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+  </update>
+</mapper>

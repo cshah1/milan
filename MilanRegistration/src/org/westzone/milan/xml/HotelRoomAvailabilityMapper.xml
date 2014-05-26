@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.westzone.milan.dao.HotelRoomAvailabilityMapper" >
+  <resultMap id="BaseResultMap" type="org.westzone.milan.model.HotelRoomAvailability" >
+    <id column="hotelRoomID" property="hotelRoomID" jdbcType="INTEGER" />
+    <id column="date" property="date" jdbcType="DATE" />
+    <result column="isFull" property="isFull" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hotelRoomID, date, isFull
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.westzone.milan.model.HotelRoomAvailabilityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hotelroomavailability
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.westzone.milan.model.HotelRoomAvailabilityKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from hotelroomavailability
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+      and date = #{date,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.westzone.milan.model.HotelRoomAvailabilityKey" >
+    delete from hotelroomavailability
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+      and date = #{date,jdbcType=DATE}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.westzone.milan.model.HotelRoomAvailabilityExample" >
+    delete from hotelroomavailability
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.westzone.milan.model.HotelRoomAvailability" >
+    insert into hotelroomavailability (hotelRoomID, date, isFull
+      )
+    values (#{hotelRoomID,jdbcType=INTEGER}, #{date,jdbcType=DATE}, #{isFull,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.westzone.milan.model.HotelRoomAvailability" >
+    insert into hotelroomavailability
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hotelRoomID != null" >
+        hotelRoomID,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="isFull != null" >
+        isFull,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hotelRoomID != null" >
+        #{hotelRoomID,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="isFull != null" >
+        #{isFull,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.westzone.milan.model.HotelRoomAvailabilityExample" resultType="java.lang.Integer" >
+    select count(*) from hotelroomavailability
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hotelroomavailability
+    <set >
+      <if test="record.hotelRoomID != null" >
+        hotelRoomID = #{record.hotelRoomID,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.isFull != null" >
+        isFull = #{record.isFull,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hotelroomavailability
+    set hotelRoomID = #{record.hotelRoomID,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      isFull = #{record.isFull,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.westzone.milan.model.HotelRoomAvailability" >
+    update hotelroomavailability
+    <set >
+      <if test="isFull != null" >
+        isFull = #{isFull,jdbcType=BIT},
+      </if>
+    </set>
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+      and date = #{date,jdbcType=DATE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.westzone.milan.model.HotelRoomAvailability" >
+    update hotelroomavailability
+    set isFull = #{isFull,jdbcType=BIT}
+    where hotelRoomID = #{hotelRoomID,jdbcType=INTEGER}
+      and date = #{date,jdbcType=DATE}
+  </update>
+</mapper>
