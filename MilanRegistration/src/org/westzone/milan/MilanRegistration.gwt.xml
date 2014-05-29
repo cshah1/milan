@@ -19,8 +19,10 @@
 
   <!-- Other module inherits                                      -->
 
-  <!-- Specify the app entry point class.                         -->
+  <!-- Specify the app entry point class.                         
   <entry-point class='org.westzone.milan.client.MilanRegistration'/>
+  -->
+  <entry-point class='org.westzone.milan.client.RegistrationView'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

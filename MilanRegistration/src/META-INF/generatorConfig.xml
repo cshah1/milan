@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+        <classPathEntry location="C:\Users\chirayu\git\milan\MilanRegistration\war\WEB-INF\lib\mysql-connector-java-5.1.30-bin.jar" />
+
+        <context id="MySQLTables" targetRuntime="MyBatis3">
+                
+                <commentGenerator>
+                        <property name="suppressAllComments" value="true" />
+                        <property name="suppressDate" value="true" />
+                </commentGenerator>
+                
+                
+                <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/milan" userId="milan"
+                        password="milan">
+                </jdbcConnection>
+
+               
+                <javaTypeResolver>
+                        <property name="forceBigDecimals" value="false" />
+                </javaTypeResolver>
+
+                
+                <javaModelGenerator targetPackage="org.westzone.milan.model"  targetProject="MilanRegistraion">
+                        <!--property name="constructorBased" value="true" />
+                        <property name="immutable" value="true" /-->
+                        <property name="enableSubPackages" value="true" />
+                        <property name="trimStrings" value="true" />
+                </javaModelGenerator>
+
+               
+                <sqlMapGenerator targetPackage="org.westzone.milan.xml" targetProject="MilanRegistraion">
+                        <property name="enableSubPackages" value="true" />
+                </sqlMapGenerator>
+                
+                
+                <javaClientGenerator type="XMLMAPPER" targetPackage="org.westzone.milan.dao" 
+                        targetProject="MilanRegistraion">
+                        <property name="enableSubPackages" value="true" />
+                </javaClientGenerator>
+
+               
+                <table schema="milan" tableName="registration" domainObjectName="Registration">
+                        <property name="useActualColumnNames" value="false" />
+                        <property name="ignoreQualifiersAtRuntime" value="true" />
+                        <generatedKey column="id" sqlStatement="MySql" identity="true" type="post" />
+                </table>
+                <table schema="milan" tableName="hotel" domainObjectName="Hotel">
+                        <property name="useActualColumnNames" value="false" />
+                        <property name="ignoreQualifiersAtRuntime" value="true" />
+                        <generatedKey column="id" sqlStatement="MySql" identity="true" type="post" />
+                </table>
+                <table schema="milan" tableName="room" domainObjectName="Room">
+                        <property name="useActualColumnNames" value="false" />
+                        <property name="ignoreQualifiersAtRuntime" value="true" />
+                </table>
+        </context>
+</generatorConfiguration>

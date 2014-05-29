@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.westzone.milan.dao.HotelMapper;
-import org.westzone.milan.model.Hotel;
+//import org.westzone.milan.dao.HotelMapper;
+//import org.westzone.milan.model.Hotel;
 
 public class EntityTest {
 	
@@ -29,13 +29,13 @@ public class EntityTest {
 
 	@Test
 	public void testLoadHotel() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-		  Hotel hotel = session.getMapper(HotelMapper.class).selectByPrimaryKey(1);
-		  logger.debug("Hotel found: " + hotel.getName());
-		} finally {
-		  session.close();
-		}
+//		SqlSession session = sqlSessionFactory.openSession();
+//		try {
+//		  Hotel hotel = session.getMapper(HotelMapper.class).selectByPrimaryKey(1);
+//		  logger.debug("Hotel found: " + hotel.getName());
+//		} finally {
+//		  session.close();
+//		}
 	}
 
 }

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.westzone.milan.dao.RoomMapper">
+  <resultMap id="BaseResultMap" type="org.westzone.milan.model.Room">
+    <id column="virtual_room_num" jdbcType="VARCHAR" property="virtualRoomNum" />
+    <result column="hotel_name" jdbcType="VARCHAR" property="hotelName" />
+    <result column="room_type" jdbcType="CHAR" property="roomType" />
+    <result column="room_num" jdbcType="INTEGER" property="roomNum" />
+    <result column="available_thur" jdbcType="CHAR" property="availableThur" />
+    <result column="available_fri" jdbcType="CHAR" property="availableFri" />
+    <result column="available_sat" jdbcType="CHAR" property="availableSat" />
+    <result column="available_sun" jdbcType="CHAR" property="availableSun" />
+    <result column="available_mon" jdbcType="CHAR" property="availableMon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    virtual_room_num, hotel_name, room_type, room_num, available_thur, available_fri, 
+    available_sat, available_sun, available_mon
+  </sql>
+  <select id="selectByExample" parameterType="org.westzone.milan.model.RoomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from room
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.westzone.milan.model.RoomExample">
+    delete from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.westzone.milan.model.Room">
+    insert into room (virtual_room_num, hotel_name, room_type, 
+      room_num, available_thur, available_fri, 
+      available_sat, available_sun, available_mon
+      )
+    values (#{virtualRoomNum,jdbcType=VARCHAR}, #{hotelName,jdbcType=VARCHAR}, #{roomType,jdbcType=CHAR}, 
+      #{roomNum,jdbcType=INTEGER}, #{availableThur,jdbcType=CHAR}, #{availableFri,jdbcType=CHAR}, 
+      #{availableSat,jdbcType=CHAR}, #{availableSun,jdbcType=CHAR}, #{availableMon,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.westzone.milan.model.Room">
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="virtualRoomNum != null">
+        virtual_room_num,
+      </if>
+      <if test="hotelName != null">
+        hotel_name,
+      </if>
+      <if test="roomType != null">
+        room_type,
+      </if>
+      <if test="roomNum != null">
+        room_num,
+      </if>
+      <if test="availableThur != null">
+        available_thur,
+      </if>
+      <if test="availableFri != null">
+        available_fri,
+      </if>
+      <if test="availableSat != null">
+        available_sat,
+      </if>
+      <if test="availableSun != null">
+        available_sun,
+      </if>
+      <if test="availableMon != null">
+        available_mon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="virtualRoomNum != null">
+        #{virtualRoomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelName != null">
+        #{hotelName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null">
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomNum != null">
+        #{roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="availableThur != null">
+        #{availableThur,jdbcType=CHAR},
+      </if>
+      <if test="availableFri != null">
+        #{availableFri,jdbcType=CHAR},
+      </if>
+      <if test="availableSat != null">
+        #{availableSat,jdbcType=CHAR},
+      </if>
+      <if test="availableSun != null">
+        #{availableSun,jdbcType=CHAR},
+      </if>
+      <if test="availableMon != null">
+        #{availableMon,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.westzone.milan.model.RoomExample" resultType="java.lang.Integer">
+    select count(*) from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update room
+    <set>
+      <if test="record.virtualRoomNum != null">
+        virtual_room_num = #{record.virtualRoomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotelName != null">
+        hotel_name = #{record.hotelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomType != null">
+        room_type = #{record.roomType,jdbcType=CHAR},
+      </if>
+      <if test="record.roomNum != null">
+        room_num = #{record.roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.availableThur != null">
+        available_thur = #{record.availableThur,jdbcType=CHAR},
+      </if>
+      <if test="record.availableFri != null">
+        available_fri = #{record.availableFri,jdbcType=CHAR},
+      </if>
+      <if test="record.availableSat != null">
+        available_sat = #{record.availableSat,jdbcType=CHAR},
+      </if>
+      <if test="record.availableSun != null">
+        available_sun = #{record.availableSun,jdbcType=CHAR},
+      </if>
+      <if test="record.availableMon != null">
+        available_mon = #{record.availableMon,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update room
+    set virtual_room_num = #{record.virtualRoomNum,jdbcType=VARCHAR},
+      hotel_name = #{record.hotelName,jdbcType=VARCHAR},
+      room_type = #{record.roomType,jdbcType=CHAR},
+      room_num = #{record.roomNum,jdbcType=INTEGER},
+      available_thur = #{record.availableThur,jdbcType=CHAR},
+      available_fri = #{record.availableFri,jdbcType=CHAR},
+      available_sat = #{record.availableSat,jdbcType=CHAR},
+      available_sun = #{record.availableSun,jdbcType=CHAR},
+      available_mon = #{record.availableMon,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.westzone.milan.model.Room">
+    update room
+    <set>
+      <if test="hotelName != null">
+        hotel_name = #{hotelName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null">
+        room_type = #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomNum != null">
+        room_num = #{roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="availableThur != null">
+        available_thur = #{availableThur,jdbcType=CHAR},
+      </if>
+      <if test="availableFri != null">
+        available_fri = #{availableFri,jdbcType=CHAR},
+      </if>
+      <if test="availableSat != null">
+        available_sat = #{availableSat,jdbcType=CHAR},
+      </if>
+      <if test="availableSun != null">
+        available_sun = #{availableSun,jdbcType=CHAR},
+      </if>
+      <if test="availableMon != null">
+        available_mon = #{availableMon,jdbcType=CHAR},
+      </if>
+    </set>
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.westzone.milan.model.Room">
+    update room
+    set hotel_name = #{hotelName,jdbcType=VARCHAR},
+      room_type = #{roomType,jdbcType=CHAR},
+      room_num = #{roomNum,jdbcType=INTEGER},
+      available_thur = #{availableThur,jdbcType=CHAR},
+      available_fri = #{availableFri,jdbcType=CHAR},
+      available_sat = #{availableSat,jdbcType=CHAR},
+      available_sun = #{availableSun,jdbcType=CHAR},
+      available_mon = #{availableMon,jdbcType=CHAR}
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="org.westzone.milan.model.Room">
+    <id column="virtual_room_num" jdbcType="VARCHAR" property="virtualRoomNum" />
+    <result column="hotel_name" jdbcType="VARCHAR" property="hotelName" />
+    <result column="room_type" jdbcType="CHAR" property="roomType" />
+    <result column="room_num" jdbcType="INTEGER" property="roomNum" />
+    <result column="available_thur" jdbcType="CHAR" property="availableThur" />
+    <result column="available_fri" jdbcType="CHAR" property="availableFri" />
+    <result column="available_sat" jdbcType="CHAR" property="availableSat" />
+    <result column="available_sun" jdbcType="CHAR" property="availableSun" />
+    <result column="available_mon" jdbcType="CHAR" property="availableMon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    virtual_room_num, hotel_name, room_type, room_num, available_thur, available_fri, 
+    available_sat, available_sun, available_mon
+  </sql>
+  <select id="selectByExample" parameterType="org.westzone.milan.model.RoomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from room
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.westzone.milan.model.RoomExample">
+    delete from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.westzone.milan.model.Room">
+    insert into room (virtual_room_num, hotel_name, room_type, 
+      room_num, available_thur, available_fri, 
+      available_sat, available_sun, available_mon
+      )
+    values (#{virtualRoomNum,jdbcType=VARCHAR}, #{hotelName,jdbcType=VARCHAR}, #{roomType,jdbcType=CHAR}, 
+      #{roomNum,jdbcType=INTEGER}, #{availableThur,jdbcType=CHAR}, #{availableFri,jdbcType=CHAR}, 
+      #{availableSat,jdbcType=CHAR}, #{availableSun,jdbcType=CHAR}, #{availableMon,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.westzone.milan.model.Room">
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="virtualRoomNum != null">
+        virtual_room_num,
+      </if>
+      <if test="hotelName != null">
+        hotel_name,
+      </if>
+      <if test="roomType != null">
+        room_type,
+      </if>
+      <if test="roomNum != null">
+        room_num,
+      </if>
+      <if test="availableThur != null">
+        available_thur,
+      </if>
+      <if test="availableFri != null">
+        available_fri,
+      </if>
+      <if test="availableSat != null">
+        available_sat,
+      </if>
+      <if test="availableSun != null">
+        available_sun,
+      </if>
+      <if test="availableMon != null">
+        available_mon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="virtualRoomNum != null">
+        #{virtualRoomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelName != null">
+        #{hotelName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null">
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomNum != null">
+        #{roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="availableThur != null">
+        #{availableThur,jdbcType=CHAR},
+      </if>
+      <if test="availableFri != null">
+        #{availableFri,jdbcType=CHAR},
+      </if>
+      <if test="availableSat != null">
+        #{availableSat,jdbcType=CHAR},
+      </if>
+      <if test="availableSun != null">
+        #{availableSun,jdbcType=CHAR},
+      </if>
+      <if test="availableMon != null">
+        #{availableMon,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.westzone.milan.model.RoomExample" resultType="java.lang.Integer">
+    select count(*) from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update room
+    <set>
+      <if test="record.virtualRoomNum != null">
+        virtual_room_num = #{record.virtualRoomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotelName != null">
+        hotel_name = #{record.hotelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomType != null">
+        room_type = #{record.roomType,jdbcType=CHAR},
+      </if>
+      <if test="record.roomNum != null">
+        room_num = #{record.roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.availableThur != null">
+        available_thur = #{record.availableThur,jdbcType=CHAR},
+      </if>
+      <if test="record.availableFri != null">
+        available_fri = #{record.availableFri,jdbcType=CHAR},
+      </if>
+      <if test="record.availableSat != null">
+        available_sat = #{record.availableSat,jdbcType=CHAR},
+      </if>
+      <if test="record.availableSun != null">
+        available_sun = #{record.availableSun,jdbcType=CHAR},
+      </if>
+      <if test="record.availableMon != null">
+        available_mon = #{record.availableMon,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update room
+    set virtual_room_num = #{record.virtualRoomNum,jdbcType=VARCHAR},
+      hotel_name = #{record.hotelName,jdbcType=VARCHAR},
+      room_type = #{record.roomType,jdbcType=CHAR},
+      room_num = #{record.roomNum,jdbcType=INTEGER},
+      available_thur = #{record.availableThur,jdbcType=CHAR},
+      available_fri = #{record.availableFri,jdbcType=CHAR},
+      available_sat = #{record.availableSat,jdbcType=CHAR},
+      available_sun = #{record.availableSun,jdbcType=CHAR},
+      available_mon = #{record.availableMon,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.westzone.milan.model.Room">
+    update room
+    <set>
+      <if test="hotelName != null">
+        hotel_name = #{hotelName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null">
+        room_type = #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomNum != null">
+        room_num = #{roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="availableThur != null">
+        available_thur = #{availableThur,jdbcType=CHAR},
+      </if>
+      <if test="availableFri != null">
+        available_fri = #{availableFri,jdbcType=CHAR},
+      </if>
+      <if test="availableSat != null">
+        available_sat = #{availableSat,jdbcType=CHAR},
+      </if>
+      <if test="availableSun != null">
+        available_sun = #{availableSun,jdbcType=CHAR},
+      </if>
+      <if test="availableMon != null">
+        available_mon = #{availableMon,jdbcType=CHAR},
+      </if>
+    </set>
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.westzone.milan.model.Room">
+    update room
+    set hotel_name = #{hotelName,jdbcType=VARCHAR},
+      room_type = #{roomType,jdbcType=CHAR},
+      room_num = #{roomNum,jdbcType=INTEGER},
+      available_thur = #{availableThur,jdbcType=CHAR},
+      available_fri = #{availableFri,jdbcType=CHAR},
+      available_sat = #{availableSat,jdbcType=CHAR},
+      available_sun = #{availableSun,jdbcType=CHAR},
+      available_mon = #{availableMon,jdbcType=CHAR}
+    where virtual_room_num = #{virtualRoomNum,jdbcType=VARCHAR}
+  </update>
+</mapper>
